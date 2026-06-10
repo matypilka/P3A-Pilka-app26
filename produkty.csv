@@ -1,9 +1,9 @@
-id;nazev;popis
-1;Luxury Drive;Prémiová vůně do auta s elegantním designem a dlouhou výdrží pro luxusní pocit při každé jízdě.
-2;Fresh Clip;Malý klip do ventilace s intenzivní svěží vůní, který rychle provoní celé auto.
-3;Black Ice Premium;Silnější pánská vůně do auta inspirovaná drahými parfémy s moderním vzhledem.
-4;Aroma Wood;Dřevěná závěsná vůně s přírodními esencemi a decentním minimalistickým stylem.
-5;Neon Air;Barevná vůně do auta pro mladé řidiče s ovocnými a energickými tóny.
-6;Pure Cotton;Jemná čistá vůně připomínající čerstvě vyprané prádlo a čistý interiér auta.
-7;Midnight Oud;Luxusní orientální vůně s tmavým designem a dlouhotrvající intenzitou.
-8;Bubble Pop;Sladká hravá vůně s motivem žvýkaček a candy stylu pro výrazné provonění auta.
+id;nazev;popis;cena
+1;Luxury Drive;Prémiová vůně do auta s elegantním designem a dlouhou výdrží pro luxusní pocit při každé jízdě.;299 Kč
+2;Fresh Clip;Malý klip do ventilace s intenzivní svěží vůní, který rychle provoní celé auto.;149 Kč
+3;Black Ice Premium;Silnější pánská vůně do auta inspirovaná drahými parfémy s moderním vzhledem.;199 Kč
+4;Aroma Wood;Dřevěná závěsná vůně s přírodními esencemi a decentním minimalistickým stylem.;179 Kč
+5;Neon Air;Barevná vůně do auta pro mladé řidiče s ovocnými a energickými tóny.;129 Kč
+6;Pure Cotton;Jemná čistá vůně připomínající čerstvě vyprané prádlo a čistý interiér auta.;159 Kč
+7;Midnight Oud;Luxusní orientální vůně s tmavým designem a dlouhotrvající intenzitou.;349 Kč
+8;Bubble Pop;Sladká hravá vůně s motivem žvýkaček a candy stylu pro výrazné provonění auta.;119 Kč
