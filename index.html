@@ -25,14 +25,14 @@
             background-color: var(--dark-blue);
             color: var(--text-light);
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             border-bottom: 4px solid var(--accent-gold);
         }
-        header h1 {
-            font-size: 3rem;
-            letter-spacing: 3px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
+        /* Stylování loga v záhlaví */
+        .logo-container img {
+            max-width: 250px;
+            height: auto;
+            margin-bottom: 10px;
         }
         header p {
             font-size: 1.1rem;
@@ -64,6 +64,9 @@
             border: 1px solid #d9cebe;
             border-radius: 6px;
             padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .product-card:hover {
@@ -77,7 +80,15 @@
             border-bottom: 2px solid var(--accent-gold);
             padding-bottom: 5px;
         }
-        .product-card p { font-size: 0.95rem; color: #4a5568; }
+        .product-card p { font-size: 0.95rem; color: #4a5568; margin-bottom: 15px; }
+        /* Stylování zobrazení ceny */
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--dark-blue);
+            margin-top: auto;
+            text-align: right;
+        }
         .form-section {
             background-color: var(--dark-blue);
             color: var(--text-light);
@@ -127,47 +138,16 @@
 <body>
 
     <header>
-        <h1>CarScent</h1>
+        <div class="logo-container">
+            <img src="logo.png" alt="CarScent Logo">
+        </div>
         <p>Premium Auto Fragrances</p>
     </header>
 
     <div class="container">
         <h2 class="section-title">Naše Produkty</h2>
         
-        <div class="products-grid">
-            <div class="product-card">
-                <h3>Luxury Drive</h3>
-                <p>Prémiová vůně do auta s elegantním designem a dlouhou výdrží pro luxusní pocit při každé jízdě.</p>
-            </div>
-            <div class="product-card">
-                <h3>Fresh Clip</h3>
-                <p>Malý klip do ventilace s intenzivní svěží vůní, který rychle provoní celé auto.</p>
-            </div>
-            <div class="product-card">
-                <h3>Black Ice Premium</h3>
-                <p>Silnější pánská vůně do auta inspirovaná drahými parfémy s moderním vzhledem.</p>
-            </div>
-            <div class="product-card">
-                <h3>Aroma Wood</h3>
-                <p>Dřevěná závěsná vůně s přírodními esencemi a decentním minimalistickým stylem.</p>
-            </div>
-            <div class="product-card">
-                <h3>Neon Air</h3>
-                <p>Barevná vůně do auta pro mladé řidiče s ovocnými a energickými tóny.</p>
-            </div>
-            <div class="product-card">
-                <h3>Pure Cotton</h3>
-                <p>Jemná čistá vůně připomínající čerstvě vyprané prádlo a čistý interiér auta.</p>
-            </div>
-            <div class="product-card">
-                <h3>Midnight Oud</h3>
-                <p>Luxusní orientální vůně s tmavým designem a dlouhotrvající intenzitou.</p>
-            </div>
-            <div class="product-card">
-                <h3>Bubble Pop</h3>
-                <p>Sladká hravá vůně s motivem žvýkaček a candy stylu pro výrazné provonění auta.</p>
-            </div>
-        </div>
+        <div class="products-grid" id="productsContainer"></div>
 
         <div class="form-section">
             <h2>Nezávazná Objednávka</h2>
@@ -186,16 +166,7 @@
                 </div>
                 <div class="form-group">
                     <label for="product">Vyberte produkt</label>
-                    <select id="product" required>
-                        <option value="Luxury Drive">Luxury Drive</option>
-                        <option value="Fresh Clip">Fresh Clip</option>
-                        <option value="Black Ice Premium">Black Ice Premium</option>
-                        <option value="Aroma Wood">Aroma Wood</option>
-                        <option value="Neon Air">Neon Air</option>
-                        <option value="Pure Cotton">Pure Cotton</option>
-                        <option value="Midnight Oud">Midnight Oud</option>
-                        <option value="Bubble Pop">Bubble Pop</option>
-                    </select>
+                    <select id="product" required></select>
                 </div>
                 <div class="form-group">
                     <label for="note">Poznámka k objednávce</label>
@@ -211,6 +182,44 @@
     </footer>
 
     <script>
+        // NAČTENÍ PRODUKTŮ VČETNĚ CENY Z CSV SOUBORU
+        fetch('produkty.csv')
+            .then(response => response.text())
+            .then(data => {
+                const riadky = data.split('\n');
+                const container = document.getElementById('productsContainer');
+                const select = document.getElementById('product');
+
+                for (let i = 1; i < riadky.length; i++) {
+                    if (riadky[i].trim() === '') continue;
+                    
+                    const bunky = riadky[i].split(';');
+                    const nazev = bunky[1];
+                    const popis = bunky[2];
+                    const cena = bunky[3]; // Načtení ceny ze 4. sloupce
+
+                    // Vytvoření karty produktu s cenou
+                    const karta = document.createElement('div');
+                    karta.className = 'product-card';
+                    karta.innerHTML = `
+                        <div>
+                            <h3>${nazev}</h3>
+                            <p>${popis}</p>
+                        </div>
+                        <div class="product-price">${cena}</div>
+                    `;
+                    container.appendChild(karta);
+
+                    // Přidání produktu do výběru v objednávce (přidáme cenu i do závorky pro přehled)
+                    const moznost = document.createElement('option');
+                    moznost.value = `${nazev} (${cena})`;
+                    moznost.textContent = `${nazev} (${cena})`;
+                    select.appendChild(moznost);
+                }
+            })
+            .catch(error => console.error('Chyba při načítání CSV:', error));
+
+        // FUNKCE PRO ODESLÁNÍ FORMULÁŘE NA E-MAIL
         document.getElementById('orderForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
